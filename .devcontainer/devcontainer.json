@@ -5,17 +5,22 @@
   ],
   "service": "backend",
   "workspaceFolder": "/workspace",
+
+  "overrideCommand": false,
+  "remoteUser": "root",
+
   "customizations": {
     "vscode": {
-      "extensions": [
-        "ms-azuretools.vscode-docker",
-        "prisma.prisma",
-        "eamodio.gitlens"
-      ],
-      "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+      // 🔹 Instala solo lo esencial dentro del contenedor
+      "extensions": []
       }
     }
   },
-  "postCreateCommand": "echo 'Entorno listo. El servidor se iniciará automáticamente.'"
+
+  // 🔹 Mueve extensiones pesadas al host en vez del contenedor
+  "mounts": [
+    "source=${env:HOME}/.vscode-server/extensions,target=/root/.vscode-server/extensions,type=bind,consistency=cached"
+  ],
+
+  "postCreateCommand": "echo '✅ Entorno listo. El servidor se iniciará automáticamente.'"
 }
