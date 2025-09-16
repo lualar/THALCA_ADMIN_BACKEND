@@ -14,11 +14,11 @@ done
 
 # 2. Ejecutar las migraciones de Prisma
 echo "🚀 Ejecutando migraciones de la base de datos..."
-npx prisma migrate deploy
+npx prisma migrate deploy --schema=./prisma/schema.prisma
 
 # 3. Generar el cliente de Prisma (por si acaso)
 echo "⚙️ Generando cliente de Prisma..."
-npx prisma generate
+npx prisma generate --schema=./prisma/schema.prisma
 
 # 4. Iniciar la aplicación principal
 echo "🏁 Iniciando la aplicación..."
