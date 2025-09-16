@@ -1,0 +1,27 @@
+# Dependencias de Node.js
+# La carpeta node_modules contiene todos los paquetes descargados.
+# Se puede regenerar en cualquier momento ejecutando "npm install".
+/node_modules
+
+# Archivos de Entorno - ¡CRÍTICO!
+# Contiene contraseñas, claves de API y otros secretos.
+# ¡NUNCA DEBE SUBIRSE A GITHUB!
+.env
+
+# Archivos de Build
+# La carpeta /dist contiene el código JavaScript compilado que se usa en producción.
+# Se genera al ejecutar "npm run build". No se debe versionar el código compilado.
+/dist
+
+# Logs de NPM
+# Archivos de registro que se generan si npm falla.
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos de Sistema Operativo y Editor de Código
+# Archivos autogenerados por macOS, Windows y VS Code que no son parte del proyecto.
+.DS_Store
+Thumbs.db
+.vscode/
