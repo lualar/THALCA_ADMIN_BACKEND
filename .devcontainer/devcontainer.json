@@ -1,26 +1,14 @@
 {
-  "name": "THALCA PCL Backend",
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ],
+  "name": "Thalca Backend Dev",
+  "dockerComposeFile": "docker-compose.yml",
   "service": "backend",
   "workspaceFolder": "/workspace",
-
-  "overrideCommand": false,
-  "remoteUser": "root",
-
-  "customizations": {
-    "vscode": {
-      // 🔹 Instala solo lo esencial dentro del contenedor
-      "extensions": []
-      }
-    }
-  },
-
-  // 🔹 Mueve extensiones pesadas al host en vez del contenedor
-  "mounts": [
-    "source=${env:HOME}/.vscode-server/extensions,target=/root/.vscode-server/extensions,type=bind,consistency=cached"
+  "forwardPorts": [3000],
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
   ],
-
-  "postCreateCommand": "echo '✅ Entorno listo. El servidor se iniciará automáticamente.'"
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
 }
