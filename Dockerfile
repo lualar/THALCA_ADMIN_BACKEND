@@ -1,0 +1,33 @@
+FROM node:18
+
+# Instala herramientas necesarias
+# Instala herramientas necesarias para VS Code Server + Postgres
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    curl \
+    tar \
+    git \
+    procps \
+    && rm -rf /var/lib/apt/lists/*
+
+# Define el directorio de trabajo
+WORKDIR /workspace
+
+# Copia los package.json e instala dependencias PRIMERO
+# Esto aprovecha el cache de Docker y acelera reconstrucciones futuras
+COPY package*.json ./
+RUN npm install
+
+# Copia el resto del código fuente al contenedor
+COPY . .
+
+# Expone el puerto de la aplicación
+EXPOSE 3000
+
+# El entrypoint se encargará de las migraciones y de iniciar
+COPY entrypoint.sh .
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
+
+# El comando por defecto que ejecutará el entrypoint
+CMD ["npm", "run", "start:dev"]
