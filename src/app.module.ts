@@ -5,10 +5,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CollaboratorsController } from './collaborators.controller';
 import { CollaboratorsService } from './collaborators.service';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [],
-  controllers: [AppController, CollaboratorsController], // <-- Añade CollaboratorsController aquí
-  providers: [AppService, CollaboratorsService],       // <-- Añade CollaboratorsService aquí
+  controllers: [AppController, CollaboratorsController], 
+  providers: [AppService, CollaboratorsService, PrismaService],       
 })
 export class AppModule {}

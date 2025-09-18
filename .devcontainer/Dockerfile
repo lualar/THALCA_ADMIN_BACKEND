@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20
 
 # Install necessary tools
 # Tools needed for VS Code Server + Postgres
@@ -16,6 +16,7 @@ WORKDIR /workspace
 # Copy package.json first and install dependencies
 # This takes advantage of Docker cache and speeds up future rebuilds
 COPY package*.json ./
+COPY prisma ./prisma
 RUN npm install
 
 # Copy the rest of the source code into the container
@@ -27,7 +28,7 @@ EXPOSE 3000
 # Entrypoint handles migrations and starts the app
 COPY .devcontainer/entrypoint.sh .
 RUN chmod +x ./entrypoint.sh
-#ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 # Default command executed by entrypoint
 CMD ["npm", "run", "start:dev"]

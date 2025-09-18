@@ -12,7 +12,7 @@ done
 echo "✅ The database is ready!"
 
 # Apply Prisma migrations
-npx prisma migrate deploy --preview-feature --schema=./prisma/schema.prisma --url="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
+npx prisma migrate deploy --schema=./prisma/schema.prisma --url="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
 
 echo "✅ Database migrations applied. Starting the application..."
 
