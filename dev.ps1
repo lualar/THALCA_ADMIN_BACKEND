@@ -2,7 +2,7 @@ param(
     [string]$action = "up"
 )
 
-$composeFile = "docker-compose.yml"
+$composeFile = ".devcontainer\docker-compose.yml"
 
 switch ($action) {
     "up" {
