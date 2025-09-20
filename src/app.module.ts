@@ -19,7 +19,6 @@ import { PrismaService } from './prisma.service';
     RolesModule,
     ReportsModule,
   ],
-
   controllers: [AppController],
   providers: [
     AppService,
