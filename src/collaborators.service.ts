@@ -8,8 +8,6 @@ import { PrismaService } from '../prisma.service';
 export class CollaboratorsService {
   constructor(private prisma: PrismaService) {}
 
-// src/collaborators.service.ts
-
 async create(createCollaboratorDto: CreateCollaboratorDto) {
   // Log the incoming data for debugging purposes.
   console.log('Service received data to create:', createCollaboratorDto);
@@ -44,20 +42,20 @@ async create(createCollaboratorDto: CreateCollaboratorDto) {
   return newCollaborator;
 }
 
-  // --- NEW METHOD START ---
-  async findOne(uid: string) {
-    // Use Prisma's 'findUnique' method to search for a collaborator
-    // by the 'uid' field, which we defined as unique in our schema.
-    const collaborator = await this.prisma.collaborator.findUnique({
-      where: { uid: uid },
-    });
+// --- NEW METHOD START ---
+async findOne(uid: string) {
+  // Use Prisma's 'findUnique' method to search for a collaborator
+  // by the 'uid' field, which we defined as unique in our schema.
+  const collaborator = await this.prisma.collaborator.findUnique({
+    where: { uid: uid },
+  });
 
-    // If no collaborator is found, throw a standard 404 Not Found error.
-    // NestJS will handle sending the correct HTTP response.
-    if (!collaborator) {
-      throw new NotFoundException(`Collaborator with UID '${uid}' not found.`);
-    }
-    return collaborator;
+  // If no collaborator is found, throw a standard 404 Not Found error.
+  // NestJS will handle sending the correct HTTP response.
+  if (!collaborator) {
+    throw new NotFoundException(`Collaborator with UID '${uid}' not found.`);
   }
-  // --- NEW METHOD END ---
+  return collaborator;
+  }
 }
+// --- NEW METHOD END --
