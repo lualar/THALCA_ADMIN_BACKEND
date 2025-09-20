@@ -46,20 +46,18 @@ model Collaborator {
   @@map("collaborators")
 }
 
-// Defines the Role model which maps to the 'roles' table
-model Role {
-  id             String   @id @default(uuid()) @db.Uuid
-  
-  // These two fields define the many-to-one relationship back to Collaborator
-  collaborator   Collaborator @relation(fields: [collaboratorId], references: [id])
-  collaboratorId String       @map("collaborator_id") @db.Uuid
-  
-  serviceId      String   @map("service_id")
-  role           String
+// Add this model to the schema.prisma file
 
-  // This ensures that a collaborator can only have one role per service
+model Role {
+  id            String    @id @default(uuid()) @db.Uuid
+  collaboratorId String  @map("collaborator_id") @db.Uuid
+  serviceId     String    @map("service_id")
+  role          String
+
+  collaborator  Collaborator @relation(fields: [collaboratorId], references: [id])
+  service       Service      @relation(fields: [serviceId], references: [serviceId])
+
   @@unique([collaboratorId, serviceId])
-  //Explicitly map the model to the 'roles' table name
   @@map("roles")
 }
 
