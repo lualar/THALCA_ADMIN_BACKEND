@@ -13,7 +13,12 @@ export class CollaboratorsController {
     return this.collaboratorsService.create(createCollaboratorDto);
   }
 
-  // --- NEW METHOD START ---
+  // This decorator handles GET requests to the root of the controller's pat
+  @Get()
+  findAll() {
+    return this.collaboratorsService.findAll();
+  }
+  
   // This decorator tells NestJS to handle GET requests.
   // The ':uid' part is a placeholder for a URL parameter.
   @Get(':uid')

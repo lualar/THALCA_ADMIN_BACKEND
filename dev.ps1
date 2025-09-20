@@ -8,6 +8,13 @@ switch ($action) {
     "up" {
         Write-Host "Levantar contenedores en modo desarrollo..." -ForegroundColor Green
         docker compose -f $composeFile down -v
+        docker compose -f $composeFile up -d
+        Start-Sleep -Seconds 5
+        docker ps
+    }
+    "build"{
+        Write-Host "Crear y Levantar contenedores en modo desarrollo..." -ForegroundColor Green
+        docker compose -f $composeFile down -v
         docker compose -f $composeFile up --build -d
         Start-Sleep -Seconds 5
         docker ps
@@ -22,6 +29,11 @@ switch ($action) {
     }
     "status" {
         Write-Host "Estado actual de los contenedores..." -ForegroundColor Magenta
+        docker ps
+    }
+    "restart" {
+        docker-compose -f $composeFile restart backend
+        Start-Sleep -Seconds 5
         docker ps
     }
     default {

@@ -41,6 +41,9 @@ model Collaborator {
 
   // This defines the one-to-many relationship: one Collaborator can have many Roles
   roles          Role[]
+
+  //Explicitly map the model to the 'collaborators' table name
+  @@map("collaborators")
 }
 
 // Defines the Role model which maps to the 'roles' table
@@ -56,4 +59,7 @@ model Role {
 
   // This ensures that a collaborator can only have one role per service
   @@unique([collaboratorId, serviceId])
+  //Explicitly map the model to the 'roles' table name
+  @@map("roles")
 }
+

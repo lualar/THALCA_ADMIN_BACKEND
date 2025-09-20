@@ -2,7 +2,7 @@
 // Add 'NotFoundException' to handle cases where the user doesn't exist.
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class CollaboratorsService {
@@ -43,6 +43,12 @@ async create(createCollaboratorDto: CreateCollaboratorDto) {
 }
 
 // --- NEW METHOD START ---
+async findAll() {
+  // Use Prisma's 'findMany' method to return all records
+  // from the collaborator table.
+  return this.prisma.collaborator.findMany();
+}
+
 async findOne(uid: string) {
   // Use Prisma's 'findUnique' method to search for a collaborator
   // by the 'uid' field, which we defined as unique in our schema.
@@ -56,6 +62,6 @@ async findOne(uid: string) {
     throw new NotFoundException(`Collaborator with UID '${uid}' not found.`);
   }
   return collaborator;
-  }
+}
 }
 // --- NEW METHOD END --
