@@ -4,10 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // Import each module here
 import { CollaboratorsModule } from './collaborators.module'; 
+import { ServicesModule } from './services.module';
 
 @Module({
   // Register each module her
-  imports: [CollaboratorsModule], 
+  imports: [CollaboratorsModule, ServicesModule],
   controllers: [AppController],
   providers: [AppService],
 })
