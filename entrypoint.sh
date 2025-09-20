@@ -1,22 +1,21 @@
 #!/bin/sh
-# This script is the entrypoint for the container.
-# It ensures the database is ready before applying migrations and starting the app.
+# entrypoint.sh
 
 set -e
 
-# Wait for the database to be ready
-echo "⏳ Waiting for database to be ready..."
-until pg_isready -h db -p 5432 -U ${POSTGRES_USER}; do
-  echo "Database is not ready yet - sleeping"
-  sleep 2
+# Lógica de espera a la base de datos
+host="db"
+port="5432"
+cmd="npm run start:dev"
+
+>&2 echo "Waiting for PostgreSQL at $host:$port..."
+
+until pg_isready -h "$host" -U "$POSTGRES_USER"; do
+  >&2 echo "PostgreSQL is unavailable - sleeping"
+  sleep 1
 done
-echo "✅ Database is ready!"
 
-# Apply database migrations
-echo "🚀 Applying database migrations..."
-npx prisma migrate deploy
+>&2 echo "PostgreSQL is up - executing command"
+exec $cmd
 
-echo "✅ Database migrations applied. Starting the application..."
-
-# Execute the command passed to this script (our CMD from Dockerfile)
-exec "$@"
+# El resto de tu lógica de entrada, si la tuvieras

@@ -9,7 +9,7 @@ cmd="npm run start:dev"
 
 >&2 echo "Waiting for PostgreSQL at $host:$port..."
 
-while ! nc -z $host $port; do
+until pg_isready -h "$host" -U "$POSTGRES_USER"; do
   >&2 echo "PostgreSQL is unavailable - sleeping"
   sleep 1
 done
