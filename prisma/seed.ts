@@ -1,19 +1,16 @@
 // prisma/seed.ts
 import { PrismaClient } from '@prisma/client';
 
-// Initialize the Prisma Client
 const prisma = new PrismaClient();
 
 async function main() {
-  // This script will be executed when you run `npx prisma db seed`.
-
-  console.log('Seeding database...');
+  console.log('Start seeding...');
 
   // Create the first super_admin collaborator.
   // This solves the requirement for a provisioning script.
   const superAdmin = await prisma.collaborator.create({
     data: {
-      uid: 'seed-super-admin-uid', // Placeholder UID
+      uid: 'seed-super-admin-uid',
       firstName: 'Admin',
       lastName: 'Thalca',
       corporateEmail: 'admin@thalca.com',
@@ -21,9 +18,8 @@ async function main() {
       status: 'ACTIVE',
     },
   });
-
-  console.log(`Created super admin user: ${superAdmin.corporateEmail}`);
-  console.log('Database seeding finished.');
+  console.log('Created super admin:', superAdmin);
+  console.log('Seeding finished.');
 }
 
 main()

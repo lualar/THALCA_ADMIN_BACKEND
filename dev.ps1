@@ -2,7 +2,7 @@ param(
     [string]$action = "up"
 )
 
-$composeFile = ".devcontainer\docker-compose.yml"
+$composeFile = "docker-compose.yml"
 
 switch ($action) {
     "up" {
@@ -15,8 +15,9 @@ switch ($action) {
     "build"{
         Write-Host "Crear y Levantar contenedores en modo desarrollo..." -ForegroundColor Green
         docker compose -f $composeFile down -v
-        docker compose -f $composeFile up --build -d
+        docker compose -f $composeFile build --no-cache
         Start-Sleep -Seconds 5
+        docker compose -f $composeFile up -d
         docker ps
     }
     "down" {
