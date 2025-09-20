@@ -1,21 +1,14 @@
 {
-  "name": "THALCA PCL Backend",
-  "dockerComposeFile": [
-    "../docker-compose.yml"
-  ],
+  "name": "Thalca Backend Dev",
+  "dockerComposeFile": "docker-compose.yml",
   "service": "backend",
   "workspaceFolder": "/workspace",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-azuretools.vscode-docker",
-        "prisma.prisma",
-        "eamodio.gitlens"
-      ],
-      "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
-      }
-    }
-  },
-  "postCreateCommand": "echo 'Entorno listo. El servidor se iniciará automáticamente.'"
+  "forwardPorts": [3000],
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
 }

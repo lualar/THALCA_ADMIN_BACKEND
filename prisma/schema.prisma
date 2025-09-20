@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // Specifies the output directory for the generated Prisma Client
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Defines the Collaborator model which maps to the 'collaborators' table
+model Collaborator {
+  // @id defines the primary key
+  // @default(uuid()) automatically generates a UUID
+  // @db.Uuid specifies the native PostgreSQL UUID type
+  id             String   @id @default(uuid()) @db.Uuid
+  
+  // @unique ensures no two collaborators can have the same uid
+  uid            String   @unique
+  
+  // @map maps this camelCase field to a snake_case column name in the database
+  corporateEmail String   @unique @map("corporate_email")
+  firstName      String   @map("first_name")
+  lastName       String   @map("last_name")
+  
+  // The '?' makes this field optional (nullable)
+  position       String?
+  
+  // @default("ACTIVE") sets a default value for new records
+  status         String   @default("ACTIVE")
+  
+  // @default(now()) sets the creation timestamp
+  createdAt      DateTime @default(now()) @map("created_at")
+  
+  // @updatedAt automatically updates this field on any record update
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // This defines the one-to-many relationship: one Collaborator can have many Roles
+  roles          Role[]
+
+  //Explicitly map the model to the 'collaborators' table name
+  @@map("collaborators")
+}
+
+// Defines the Role model which maps to the 'roles' table
+model Role {
+  id             String   @id @default(uuid()) @db.Uuid
+  
+  // These two fields define the many-to-one relationship back to Collaborator
+  collaborator   Collaborator @relation(fields: [collaboratorId], references: [id])
+  collaboratorId String       @map("collaborator_id") @db.Uuid
+  
+  serviceId      String   @map("service_id")
+  role           String
+
+  // This ensures that a collaborator can only have one role per service
+  @@unique([collaboratorId, serviceId])
+  //Explicitly map the model to the 'roles' table name
+  @@map("roles")
+}
+

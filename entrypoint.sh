@@ -1,25 +1,22 @@
-#!/bin/bash
+#!/bin/sh
+# This script is the entrypoint for the container.
+# It ensures the database is ready before applying migrations and starting the app.
 
-# Salir inmediatamente si un comando falla
 set -e
 
-# 1. Esperar a que la base de datos esté lista
-# (Este es un simple bucle de espera, se puede usar una herramienta más robusta si es necesario)
-echo "⏳ Esperando a que la base de datos esté lista..."
-until PGPASSWORD=$POSTGRES_PASSWORD psql -h "db" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c '\q'; do
-  >&2 echo "Postgres no está disponible todavía - esperando..."
-  sleep 1
+# Wait for the database to be ready
+echo "⏳ Waiting for database to be ready..."
+until pg_isready -h db -p 5432 -U ${POSTGRES_USER}; do
+  echo "Database is not ready yet - sleeping"
+  sleep 2
 done
->&2 echo "✅ Postgres está listo y aceptando conexiones."
+echo "✅ Database is ready!"
 
-# 2. Ejecutar las migraciones de Prisma
-echo "🚀 Ejecutando migraciones de la base de datos..."
+# Apply database migrations
+echo "🚀 Applying database migrations..."
 npx prisma migrate deploy
 
-# 3. Generar el cliente de Prisma (por si acaso)
-echo "⚙️ Generando cliente de Prisma..."
-npx prisma generate
+echo "✅ Database migrations applied. Starting the application..."
 
-# 4. Iniciar la aplicación principal
-echo "🏁 Iniciando la aplicación..."
+# Execute the command passed to this script (our CMD from Dockerfile)
 exec "$@"
