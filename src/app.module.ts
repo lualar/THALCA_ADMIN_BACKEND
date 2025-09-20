@@ -10,6 +10,7 @@ import { RolesModule } from './roles.module';
 @Module({
   // Register each module her
   imports: [CollaboratorsModule, ServicesModule, RolesModule],
+
   controllers: [AppController],
   providers: [AppService],
 })
